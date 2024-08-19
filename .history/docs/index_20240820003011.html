@@ -14,7 +14,7 @@
     <script>
         async function fetchData() {
             try {
-                const response = await fetch('https://my-api.vercel.app/data'); // URL ใหม่ที่โฮสต์บน Vercel
+                const response = await fetch('/data');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
