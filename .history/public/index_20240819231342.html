@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Data Display</title>
+</head>
+
+<body>
+    <h1>ข้อมูลจาก MongoDB</h1>
+    <ul id="data-list"></ul>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/data');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                const list = document.getElementById('data-list');
+                data.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `ชื่อ: ${item.name}, อีเมล: ${item.email}, อายุ: ${item.age}, งานอดิเรก: ${item.hobbies.join(', ')}`;
+                    list.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('data-list').textContent = 'Error fetching data. Please try again later.';
+            }
+        }
+
+        fetchData();
+        ฃ
+    </script>
+</body>
+
+</html>

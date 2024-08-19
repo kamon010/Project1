@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Data Display</title>
+</head>
+
+<body>
+    <h1>Users Data</h1>
+    <ul id="data-list"></ul>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/data');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const list = document.getElementById('data-list');
+
+                if (data.length === 0) {
+                    list.textContent = 'ไม่มีข้อมูลในฐานข้อมูล';
+                } else {
+                    data.forEach(item => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `ID: ${item.Users_id}, Username: ${item.Username}, Password: ${item.Password}`;
+                        list.appendChild(listItem);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                const list = document.getElementById('data-list');
+                list.textContent = 'Error fetching data. Please try again later.';
+            }
+        }
+
+        fetchData();
+    </script>
+</body>
+
+</html>
