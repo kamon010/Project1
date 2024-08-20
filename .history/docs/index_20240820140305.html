@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firestore Data Display</title>
+</head>
+
+<body>
+    <h1>Users Data from Firestore</h1>
+    <ul id="data-list"></ul>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1qX4ttFX42SzVFbg6LqjNJv9rRSepYXw",
+            authDomain: "project-63a86.firebaseapp.com",
+            projectId: "project-63a86",
+            storageBucket: "project-63a86.appspot.com",
+            messagingSenderId: "448111875731",
+            appId: "1:448111875731:web:07b5d3cc813aab22051f66",
+            measurementId: "G-44FSXM5HJR"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Function to fetch data from Firestore
+        async function fetchData() {
+            const querySnapshot = await db.collection("Users_id").get();
+            const list = document.getElementById('data-list');
+
+            querySnapshot.forEach((doc) => {
+                const listItem = document.createElement('li');
+                const data = doc.data();
+                listItem.textContent = `Username: ${data.Username}, Email: ${data.Email}, Password: ${data.Password}`;
+                list.appendChild(listItem);
+            });
+        }
+
+        // Fetch data when the page loads
+        fetchData();
+    </script>
+</body>
+
+</html>
