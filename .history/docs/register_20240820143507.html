@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firestore Data Entry</title>
+</head>
+
+<body>
+    <h1>Enter User Data</h1>
+    <form id="user-form">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required><br><br>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        // Firebase configuration
+        var firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "project-63a86.firebaseapp.com",
+            projectId: "project-63a86",
+            storageBucket: "project-63a86.appspot.com",
+            messagingSenderId: "448111875731",
+            appId: "1:448111875731:web:07b5d3cc813aab22051f66",
+            measurementId: "G-44FSXM5HJR"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.firestore();
+
+        // Handle form submission
+        document.getElementById('user-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form from submitting the traditional way
+
+            // Get form values
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var username = document.getElementById('username').value;
+
+            // Add data to Firestore
+            db.collection("Users").add({
+                    Email: email,
+                    Password: password,
+                    Username: username
+                })
+                .then(function(docRef) {
+                    alert("Document written with ID: " + docRef.id);
+                    // Clear form fields
+                    document.getElementById('user-form').reset();
+                })
+                .catch(function(error) {
+                    console.error("Error adding document: ", error);
+                });
+        });
+    </script>
+</body>
+
+</html>
